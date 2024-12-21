@@ -1,0 +1,22 @@
+services:
+  n8n:
+    image: n8nio/n8n:latest
+    container_name: n8n
+    ports:
+      - "5678:5678" # Expose n8n on port 5678
+    environment:
+      - GENERIC_TIMEZONE=UTC
+      - N8N_BASIC_AUTH_ACTIVE=true # Enable basic authentication
+      - N8N_BASIC_AUTH_USER=admin # Username for authentication
+      - N8N_BASIC_AUTH_PASSWORD=yourpassword # Password for authentication
+      - N8N_HOST=localhost
+      - N8N_PORT=5678
+      - N8N_PROTOCOL=http
+      - NODE_FUNCTION_ALLOW_EXTERNAL=all # Allow all external Node.js modules
+      - WEBHOOK_URL=http://localhost:5678
+    volumes:
+      - n8n-data:/home/node/.n8n # Persist data
+    restart: unless-stopped
+
+volumes:
+  n8n-data:
